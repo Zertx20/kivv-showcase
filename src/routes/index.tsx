@@ -1,29 +1,31 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import Navbar from "@/components/Navbar.jsx";
+import Hero from "@/components/Hero.jsx";
+import About from "@/components/About.jsx";
+import Services from "@/components/Services.jsx";
+import Portfolio from "@/components/Portfolio.jsx";
+import Contact from "@/components/Contact.jsx";
+import Footer from "@/components/Footer.jsx";
+import Lightbox from "@/components/Lightbox.jsx";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
-    ],
-  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
+  const [active, setActive] = useState(null);
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <main className="bg-bg text-text font-sans">
+      <Navbar />
+      <Hero />
+      <About />
+      <Services />
+      <Portfolio onOpen={setActive} paused={!!active} />
+      <Contact />
+      <Footer />
+      <Lightbox project={active} onClose={() => setActive(null)} />
+    </main>
   );
 }
