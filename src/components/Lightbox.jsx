@@ -35,10 +35,7 @@ export default function Lightbox({ project, onClose }) {
             ×
           </button>
 
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-5xl"
-          >
+          <div onClick={(e) => e.stopPropagation()} className="w-full max-w-5xl">
             <div className="relative aspect-video bg-black border border-[var(--color-border)]">
               {project.videoSrc ? (
                 <VideoPlayer
@@ -69,9 +66,7 @@ export default function Lightbox({ project, onClose }) {
             </div>
             <div className="mt-5 flex items-baseline justify-between gap-4">
               <div>
-                <p className="text-xs uppercase tracking-[0.3em] text-accent">
-                  {project.category}
-                </p>
+                <p className="text-xs uppercase tracking-[0.3em] text-accent">{project.category}</p>
                 <h3 className="font-syne font-extrabold text-2xl md:text-3xl mt-2">
                   {project.title}
                 </h3>

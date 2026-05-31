@@ -63,7 +63,9 @@
   height: 8px;
   border-radius: 9999px;
   background: #c8ff00;
-  box-shadow: 0 0 12px #c8ff00, 0 0 24px rgba(200, 255, 0, 0.5);
+  box-shadow:
+    0 0 12px #c8ff00,
+    0 0 24px rgba(200, 255, 0, 0.5);
   transform: translate(-50%, -50%);
   animation: kivv-travel linear infinite;
 }
@@ -80,12 +82,7 @@
   top: 0;
   bottom: 0;
   width: 1px;
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    rgba(0, 170, 255, 0.5),
-    transparent
-  );
+  background: linear-gradient(to bottom, transparent, rgba(0, 170, 255, 0.5), transparent);
   box-shadow: 0 0 8px rgba(0, 170, 255, 0.6);
   animation: kivv-playhead 14s linear infinite;
 }

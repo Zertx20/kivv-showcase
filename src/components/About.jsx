@@ -33,16 +33,16 @@ export default function About() {
           </h2>
           <div className="mt-8 max-w-2xl space-y-4 text-text/80 text-lg leading-relaxed font-light">
             <p>
-              I'm a clean, minimal video editor based in Algeria, crafting edits that
-              respect attention and reward it.
+              I'm a clean, minimal video editor based in Algeria, crafting edits that respect
+              attention and reward it.
             </p>
             <p>
-              My focus is on rhythm, restraint, and retention — every cut earns its
-              place, every frame moves the story forward.
+              My focus is on rhythm, restraint, and retention — every cut earns its place, every
+              frame moves the story forward.
             </p>
             <p>
-              From short-form social to long-form documentary work, I bring a cinematic
-              eye and a sharp sense of timing to every project.
+              From short-form social to long-form documentary work, I bring a cinematic eye and a
+              sharp sense of timing to every project.
             </p>
           </div>
         </motion.div>
@@ -59,9 +59,7 @@ export default function About() {
               key={s.l}
               className={`p-6 md:p-10 ${i < stats.length - 1 ? "border-r border-[var(--color-border)]" : ""}`}
             >
-              <div className="font-syne font-extrabold text-accent text-3xl md:text-5xl">
-                {s.n}
-              </div>
+              <div className="font-syne font-extrabold text-accent text-3xl md:text-5xl">{s.n}</div>
               <div className="mt-2 text-muted text-xs md:text-sm uppercase tracking-[0.2em]">
                 {s.l}
               </div>

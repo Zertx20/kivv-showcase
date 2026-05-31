@@ -114,4 +114,3 @@ export default function Portfolio({ onOpenDrawer }) {
     </section>
   );
 }
-

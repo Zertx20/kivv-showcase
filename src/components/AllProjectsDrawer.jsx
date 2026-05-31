@@ -2,23 +2,23 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const ALL_PROJECTS = [
-  { title: "Project 01",  category: "Brand Film", vimeoId: "1197098638", bg: "#1a1a2e" },
-  { title: "Project 02",  category: "Long-Form",  vimeoId: "1197093636", bg: "#0d1117" },
-  { title: "Project 03",  category: "Short-Form", vimeoId: "1197098353", bg: "#1a1000" },
-  { title: "Project 04",  category: "Creative",   vimeoId: "1197098439", bg: "#0a1a10" },
-  { title: "Project 05",  category: "E-Commerce", vimeoId: "1197098323", bg: "#1a0a0a" },
-  { title: "Project 06",  category: "Brand Film", vimeoId: "1197098711", bg: "#0a0a1a" },
-  { title: "Project 07",  category: "Long-Form",  vimeoId: "1197098534", bg: "#0d1a2e" },
-  { title: "Project 08",  category: "Event",      vimeoId: "1197098498", bg: "#1a0d00" },
-  { title: "Project 09",  category: "Brand Film", vimeoId: "1197098452", bg: "#0a1a1a" },
-  { title: "Project 10",  category: "Long-Form",  vimeoId: "1197098437", bg: "#12100a" },
-  { title: "Project 11",  category: "Short-Form", vimeoId: "1197098362", bg: "#1a0a1a" },
-  { title: "Project 12",  category: "Creative",   vimeoId: "1197098327", bg: "#0a1210" },
-  { title: "Project 13",  category: "Long-Form",  vimeoId: "1197098262", bg: "#1a1000" },
-  { title: "Project 14",  category: "Event",      vimeoId: "1197098263", bg: "#0d1117" },
-  { title: "Project 15",  category: "Brand Film", vimeoId: "1197098264", bg: "#1a1a2e" },
-  { title: "Project 16",  category: "Creative",   vimeoId: "1197007851", bg: "#0a1a10" },
-  { title: "Project 17",  category: "Short-Form", vimeoId: "1197007850", bg: "#1a0a0a" },
+  { title: "Project 01", category: "Brand Film", vimeoId: "1197098638", bg: "#1a1a2e" },
+  { title: "Project 02", category: "Long-Form", vimeoId: "1197093636", bg: "#0d1117" },
+  { title: "Project 03", category: "Short-Form", vimeoId: "1197098353", bg: "#1a1000" },
+  { title: "Project 04", category: "Creative", vimeoId: "1197098439", bg: "#0a1a10" },
+  { title: "Project 05", category: "E-Commerce", vimeoId: "1197098323", bg: "#1a0a0a" },
+  { title: "Project 06", category: "Brand Film", vimeoId: "1197098711", bg: "#0a0a1a" },
+  { title: "Project 07", category: "Long-Form", vimeoId: "1197098534", bg: "#0d1a2e" },
+  { title: "Project 08", category: "Event", vimeoId: "1197098498", bg: "#1a0d00" },
+  { title: "Project 09", category: "Brand Film", vimeoId: "1197098452", bg: "#0a1a1a" },
+  { title: "Project 10", category: "Long-Form", vimeoId: "1197098437", bg: "#12100a" },
+  { title: "Project 11", category: "Short-Form", vimeoId: "1197098362", bg: "#1a0a1a" },
+  { title: "Project 12", category: "Creative", vimeoId: "1197098327", bg: "#0a1210" },
+  { title: "Project 13", category: "Long-Form", vimeoId: "1197098262", bg: "#1a1000" },
+  { title: "Project 14", category: "Event", vimeoId: "1197098263", bg: "#0d1117" },
+  { title: "Project 15", category: "Brand Film", vimeoId: "1197098264", bg: "#1a1a2e" },
+  { title: "Project 16", category: "Creative", vimeoId: "1197007851", bg: "#0a1a10" },
+  { title: "Project 17", category: "Short-Form", vimeoId: "1197007850", bg: "#1a0a0a" },
 ];
 
 export default function AllProjectsDrawer({ isOpen, onClose, onVideoSelect }) {
@@ -30,9 +30,7 @@ export default function AllProjectsDrawer({ isOpen, onClose, onVideoSelect }) {
     ALL_PROJECTS.forEach(async (project) => {
       if (thumbnails[project.vimeoId]) return;
       try {
-        const res = await fetch(
-          `https://vimeo.com/api/v2/video/${project.vimeoId}.json`
-        );
+        const res = await fetch(`https://vimeo.com/api/v2/video/${project.vimeoId}.json`);
         const data = await res.json();
         setThumbnails((prev) => ({
           ...prev,
@@ -127,7 +125,9 @@ export default function AllProjectsDrawer({ isOpen, onClose, onVideoSelect }) {
                 flexShrink: 0,
               }}
             >
-              <span style={{ fontFamily: "Syne", fontWeight: 800, fontSize: "18px", color: "#F0EDE8" }}>
+              <span
+                style={{ fontFamily: "Syne", fontWeight: 800, fontSize: "18px", color: "#F0EDE8" }}
+              >
                 All Projects
               </span>
               <button
@@ -204,56 +204,68 @@ export default function AllProjectsDrawer({ isOpen, onClose, onVideoSelect }) {
                   />
 
                   {/* Play button */}
-                  <div style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    width: 40,
-                    height: 40,
-                    borderRadius: "50%",
-                    border: "2px solid #C8FF00",
-                    background: "rgba(200,255,0,0.12)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    zIndex: 3,
-                    pointerEvents: "none",
-                  }}>
-                    <span style={{
-                      color: "#C8FF00",
-                      fontSize: "14px",
-                      paddingLeft: "3px",
-                    }}>▶</span>
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      width: 40,
+                      height: 40,
+                      borderRadius: "50%",
+                      border: "2px solid #C8FF00",
+                      background: "rgba(200,255,0,0.12)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      zIndex: 3,
+                      pointerEvents: "none",
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: "#C8FF00",
+                        fontSize: "14px",
+                        paddingLeft: "3px",
+                      }}
+                    >
+                      ▶
+                    </span>
                   </div>
 
                   {/* Bottom text overlay */}
-                  <div style={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    padding: "24px 8px 8px",
-                    background: "linear-gradient(to top, rgba(0,0,0,0.92), transparent)",
-                    zIndex: 3,
-                    pointerEvents: "none",
-                  }}>
-                    <div style={{
-                      fontSize: "8px",
-                      letterSpacing: "0.12em",
-                      textTransform: "uppercase",
-                      color: "#C8FF00",
-                      marginBottom: "2px",
-                    }}>
+                  <div
+                    style={{
+                      position: "absolute",
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      padding: "24px 8px 8px",
+                      background: "linear-gradient(to top, rgba(0,0,0,0.92), transparent)",
+                      zIndex: 3,
+                      pointerEvents: "none",
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontSize: "8px",
+                        letterSpacing: "0.12em",
+                        textTransform: "uppercase",
+                        color: "#C8FF00",
+                        marginBottom: "2px",
+                      }}
+                    >
                       {project.category}
                     </div>
-                    <div style={{
-                      fontFamily: "Syne, sans-serif",
-                      fontWeight: 700,
-                      fontSize: "11px",
-                      color: "#ffffff",
-                      lineHeight: 1.2,
-                    }}>
+                    <div
+                      style={{
+                        fontFamily: "Syne, sans-serif",
+                        fontWeight: 700,
+                        fontSize: "11px",
+                        color: "#ffffff",
+                        lineHeight: 1.2,
+                      }}
+                    >
                       {project.title}
                     </div>
                   </div>

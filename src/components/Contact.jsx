@@ -81,11 +81,7 @@ export default function Contact() {
           </motion.a>
         </div>
 
-        <motion.form
-          variants={item}
-          onSubmit={submit}
-          className="mt-12 grid gap-4 max-w-2xl"
-        >
+        <motion.form variants={item} onSubmit={submit} className="mt-12 grid gap-4 max-w-2xl">
           <div className="grid md:grid-cols-2 gap-4">
             <input
               required

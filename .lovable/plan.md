@@ -1,9 +1,11 @@
 # KIVV.EDITS Portfolio — Vite + React 18 Build Plan
 
 ## Scope
+
 Replace the current TanStack Start template with a plain Vite + React 18 single-page portfolio for Abdelkrim Khader (KIVV.EDITS), matching the provided design system, components, animations, and performance rules exactly.
 
 ## Stack
+
 - Vite 5 + React 18
 - Tailwind CSS v3 (with PostCSS + autoprefixer)
 - Framer Motion
@@ -11,7 +13,9 @@ Replace the current TanStack Start template with a plain Vite + React 18 single-
 - Vercel SPA rewrites
 
 ## Cleanup
+
 Remove TanStack-specific files so the new flat Vite app builds cleanly:
+
 - Delete: `src/router.tsx`, `src/server.ts`, `src/start.ts`, `src/routes/`, `src/routeTree.gen.ts`, `src/components/ui/*`, `src/hooks/`, `src/lib/`, `src/styles.css`, `bunfig.toml`, `components.json`
 - Replace: `package.json`, `vite.config.ts` → `vite.config.js`, `tsconfig.json` removed (JS only)
 
@@ -41,6 +45,7 @@ src/
 ```
 
 ## Portfolio component (key detail)
+
 - State: `index`, `progress`, `paused` (paused when Lightbox open)
 - Auto-advance: `setInterval` 50ms ticking progress 0→100 over 5s; advance + reset on full
 - Manual nav (arrows / dots / swipe): reset progress
@@ -51,6 +56,7 @@ src/
 - 6 projects array hardcoded with provided titles/categories/ytIds/bg colors
 
 ## Lightbox
+
 - Rendered in `App.jsx` with `activeProject` state passed down
 - AnimatePresence opacity fade; iframe mounted only when open
 - Escape key listener via `useEffect`
@@ -58,6 +64,7 @@ src/
 - Shows title + category below iframe
 
 ## Design tokens (tailwind.config.js theme.extend)
+
 ```js
 colors: {
   bg: '#080808', surface: '#111111', card: '#161616',
@@ -69,6 +76,7 @@ fontFamily: { syne: ['Syne','sans-serif'], sans: ['"DM Sans"','sans-serif'] },
 ```
 
 ## Hero timeline animation (index.css)
+
 - `.track` absolute horizontal line, 5 instances at varied `top`
 - `.keyframe` small rotated squares positioned at random `left`
 - `.dot-travel` keyframe: `translateX(-10px) → translateX(calc(100vw + 10px))` with per-track durations 6–11s
@@ -76,19 +84,23 @@ fontFamily: { syne: ['Syne','sans-serif'], sans: ['"DM Sans"','sans-serif'] },
 - Glitch keyframe for accent dot hover
 
 ## Animations
+
 - Hero: `motion.div` with `initial`/`animate` + `transition.delay` stagger 0.15s
 - Sections: `useInView({ once: true, amount: 0.15 })` → fade + y:20 → 0
 - Service cards: `whileHover={{ y: -4 }}`, border transitions to accent via CSS
 - Contact rows: `whileHover={{ x: 4 }}`
 
 ## Performance
+
 - No iframe until Lightbox open
 - `loading="lazy"` on any `<img>` (none required by spec, but applied if added)
 - Fonts only in `index.html` head
 
 ## Deployment
+
 - `vercel.json`: `{ "rewrites": [{ "source": "/(.*)", "destination": "/" }] }`
 - README: `npm install && npm run dev`, `npm run build`, deploy via Vercel CLI or Git import
 
 ## Verification
+
 After build mode: run `npm install` + `npm run build` to confirm clean compile, then visually verify hero animation, slider autoplay, lightbox open/close, and mobile menu in preview.

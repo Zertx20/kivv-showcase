@@ -74,7 +74,11 @@ export default function Hero({ onOpen, paused }) {
   return (
     <section id="top" className="relative h-[100dvh] flex flex-col overflow-hidden bg-bg">
       {/* Timeline background — z-index 0, behind everything */}
-      <div className="kivv-timeline opacity-25" aria-hidden style={{ position: "absolute", inset: 0, zIndex: 0 }}>
+      <div
+        className="kivv-timeline opacity-25"
+        aria-hidden
+        style={{ position: "absolute", inset: 0, zIndex: 0 }}
+      >
         {TRACKS.map((t, i) => (
           <div key={i} className="kivv-track" style={{ top: t.top }}>
             {t.keyframes.map((k, j) => (
@@ -106,16 +110,38 @@ export default function Hero({ onOpen, paused }) {
       >
         {/* Left: Logo */}
         <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-          <span style={{ fontFamily: "Syne", fontWeight: 800, fontSize: "22px", color: "#F0EDE8", letterSpacing: "-0.01em", lineHeight: 1 }}>
+          <span
+            style={{
+              fontFamily: "Syne",
+              fontWeight: 800,
+              fontSize: "22px",
+              color: "#F0EDE8",
+              letterSpacing: "-0.01em",
+              lineHeight: 1,
+            }}
+          >
             KIVV<span style={{ color: "#C8FF00" }}>.</span>
           </span>
-          <span style={{ fontFamily: "Syne", fontWeight: 800, fontSize: "22px", color: "#F0EDE8", letterSpacing: "-0.01em", lineHeight: 1 }}>
+          <span
+            style={{
+              fontFamily: "Syne",
+              fontWeight: 800,
+              fontSize: "22px",
+              color: "#F0EDE8",
+              letterSpacing: "-0.01em",
+              lineHeight: 1,
+            }}
+          >
             EDITS
           </span>
         </div>
         {/* Right: Info */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "3px" }}>
-          <span style={{ fontFamily: "DM Sans", fontSize: "13px", fontWeight: 500, color: "#F0EDE8" }}>
+        <div
+          style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "3px" }}
+        >
+          <span
+            style={{ fontFamily: "DM Sans", fontSize: "13px", fontWeight: 500, color: "#F0EDE8" }}
+          >
             Abdelkrim Khader
           </span>
           <span style={{ fontFamily: "DM Sans", fontSize: "12px", color: "#888888" }}>
@@ -125,7 +151,12 @@ export default function Hero({ onOpen, paused }) {
             href="https://www.instagram.com/kivv.edits/"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ fontFamily: "DM Sans", fontSize: "12px", color: "#C8FF00", textDecoration: "none" }}
+            style={{
+              fontFamily: "DM Sans",
+              fontSize: "12px",
+              color: "#C8FF00",
+              textDecoration: "none",
+            }}
           >
             @kivv.edits
           </a>
@@ -134,10 +165,26 @@ export default function Hero({ onOpen, paused }) {
 
       {/* ── ROW 1.5 — TITLE ── */}
       <div className="relative shrink-0 text-center" style={{ zIndex: 10, padding: "20px 0" }}>
-        <p style={{ fontSize: "10px", letterSpacing: "0.2em", textTransform: "uppercase", color: "#888" }}>
+        <p
+          style={{
+            fontSize: "10px",
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            color: "#888",
+          }}
+        >
           SELECTED WORK
         </p>
-        <h2 style={{ fontFamily: "Syne", fontWeight: 800, fontSize: "clamp(28px, 7vw, 40px)", color: "#F0EDE8", lineHeight: 1, marginTop: "6px" }}>
+        <h2
+          style={{
+            fontFamily: "Syne",
+            fontWeight: 800,
+            fontSize: "clamp(28px, 7vw, 40px)",
+            color: "#F0EDE8",
+            lineHeight: 1,
+            marginTop: "6px",
+          }}
+        >
           Latest Projects
         </h2>
         <div style={{ width: 40, height: 2, background: "#C8FF00", margin: "8px auto 0" }} />
@@ -209,14 +256,20 @@ export default function Hero({ onOpen, paused }) {
           {/* Desktop arrows */}
           <button
             aria-label="Previous"
-            onClick={(e) => { e.stopPropagation(); go(-1); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              go(-1);
+            }}
             className="hidden md:flex absolute -left-10 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 backdrop-blur border border-[var(--color-border)] text-text hover:border-accent hover:text-accent transition-colors items-center justify-center z-20 text-sm"
           >
             ←
           </button>
           <button
             aria-label="Next"
-            onClick={(e) => { e.stopPropagation(); go(1); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              go(1);
+            }}
             className="hidden md:flex absolute -right-10 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 backdrop-blur border border-[var(--color-border)] text-text hover:border-accent hover:text-accent transition-colors items-center justify-center z-20 text-sm"
           >
             →
@@ -229,7 +282,10 @@ export default function Hero({ onOpen, paused }) {
             <button
               key={i}
               aria-label={`Go to project ${i + 1}`}
-              onClick={(e) => { e.stopPropagation(); jump(i); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                jump(i);
+              }}
               className={`h-[5px] rounded-full transition-all ${
                 i === index ? "w-[18px] bg-accent" : "w-[5px] bg-text/30 hover:bg-text/50"
               }`}
@@ -265,4 +321,3 @@ export default function Hero({ onOpen, paused }) {
     </section>
   );
 }
-
