@@ -13,9 +13,6 @@ export default defineConfig({
     server: { entry: "server" },
   },
   nitro: {
-    preset: "netlify",
-    output: {
-      dir: ".netlify/functions",
-    },
+    preset: "static",
   },
 });
