@@ -10,8 +10,8 @@ export default defineConfig({
   nitro: {
     preset: "netlify",
     output: {
-      dir: ".netlify/functions-internal",
-      serverDir: ".netlify/functions-internal/server",
+      dir: ".netlify/functions",
+      serverDir: ".netlify/functions/server",
       publicDir: "dist",
     },
   },
