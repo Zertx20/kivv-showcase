@@ -1,0 +1,142 @@
+@import "tailwindcss" source(none);
+@source "../src";
+
+@theme inline {
+  --color-bg: #080808;
+  --color-surface: #111111;
+  --color-card: #161616;
+  --color-accent: #c8ff00;
+  --color-accent2: #00aaff;
+  --color-text: #f0ede8;
+  --color-muted: #888888;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --font-syne: "Syne", sans-serif;
+  --font-sans: "DM Sans", sans-serif;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: var(--color-accent);
+    color: #000;
+  }
+}
+
+/* ---------- Hero timeline animation ---------- */
+.kivv-timeline {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.kivv-track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+}
+.kivv-keyframe {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: rgba(200, 255, 0, 0.35);
+  transform: translate(-50%, -50%) rotate(45deg);
+  top: 50%;
+}
+.kivv-dot {
+  position: absolute;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: #c8ff00;
+  box-shadow: 0 0 12px #c8ff00, 0 0 24px rgba(200, 255, 0, 0.5);
+  transform: translate(-50%, -50%);
+  animation: kivv-travel linear infinite;
+}
+@keyframes kivv-travel {
+  0% {
+    left: -2%;
+  }
+  100% {
+    left: 102%;
+  }
+}
+.kivv-playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(0, 170, 255, 0.5),
+    transparent
+  );
+  box-shadow: 0 0 8px rgba(0, 170, 255, 0.6);
+  animation: kivv-playhead 14s linear infinite;
+}
+@keyframes kivv-playhead {
+  0% {
+    left: 0%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* ---------- Glitch on hero dot ---------- */
+.kivv-glitch:hover {
+  animation: kivv-glitch 0.4s steps(2, end) infinite;
+}
+@keyframes kivv-glitch {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(2px, -1px);
+  }
+  50% {
+    transform: translate(-2px, 1px);
+  }
+  75% {
+    transform: translate(1px, 2px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+/* ---------- Pulsing dot (Contact badge) ---------- */
+.kivv-pulse {
+  position: relative;
+}
+.kivv-pulse::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 9999px;
+  background: #22c55e;
+  opacity: 0.5;
+  animation: kivv-ping 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+@keyframes kivv-ping {
+  75%,
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
