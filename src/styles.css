@@ -1,4 +1,37 @@
-@import "tailwindcss" source(none);
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap");
+@import "tailwindcss";
+
+:root {
+  --bg: #080808;
+  --surface: #111111;
+  --card: #161616;
+  --accent: #c8ff00;
+  --accent2: #00aaff;
+  --text: #f0ede8;
+  --muted: #888888;
+  --border: rgba(255, 255, 255, 0.08);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root,
+#app {
+  background-color: #080808 !important;
+  color: #f0ede8 !important;
+  min-height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  font-family: "DM Sans", sans-serif;
+}
+
 @source "../src";
 
 @theme inline {
@@ -15,18 +48,20 @@
 }
 
 @layer base {
-  * {
-    border-color: var(--color-border);
-  }
   html {
+    background-color: #080808;
+    color: #f0ede8;
     scroll-behavior: smooth;
   }
   body {
-    background-color: var(--color-bg);
-    color: var(--color-text);
+    background-color: #080808;
+    color: #f0ede8;
     font-family: var(--font-sans);
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
+  }
+  * {
+    border-color: var(--color-border);
   }
   ::selection {
     background: var(--color-accent);

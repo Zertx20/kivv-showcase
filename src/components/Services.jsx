@@ -20,25 +20,52 @@ const services = [
 
 export default function Services() {
   return (
-    <section id="services" className="py-32 px-6 bg-bg">
-      <div className="max-w-7xl mx-auto">
+    <section
+      id="services"
+      style={{ padding: "128px 24px", background: "#080808" }}
+    >
+      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6 }}
-          className="max-w-2xl mb-16"
+          style={{ maxWidth: 672, marginBottom: 64 }}
         >
-          <p className="text-xs uppercase tracking-[0.3em] text-accent mb-6">Services</p>
+          <p
+            style={{
+              fontSize: 12,
+              textTransform: "uppercase",
+              letterSpacing: "0.3em",
+              color: "#C8FF00",
+              marginBottom: 24,
+            }}
+          >
+            Services
+          </p>
           <h2
-            className="font-syne font-extrabold leading-[1.05]"
-            style={{ fontSize: "clamp(36px, 5vw, 56px)" }}
+            style={{
+              fontFamily: "Syne, sans-serif",
+              fontWeight: 800,
+              lineHeight: 1.05,
+              fontSize: "clamp(36px, 5vw, 56px)",
+              color: "#F0EDE8",
+              margin: 0,
+            }}
           >
             What I do.
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[var(--color-border)] border border-[var(--color-border)]">
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+            gap: 1,
+            background: "rgba(255,255,255,0.08)",
+            border: "1px solid rgba(255,255,255,0.08)",
+          }}
+        >
           {services.map((s, i) => (
             <motion.div
               key={s.title}
@@ -47,12 +74,45 @@ export default function Services() {
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
               whileHover={{ y: -4 }}
-              className="group bg-card p-8 md:p-10 border border-transparent hover:border-accent transition-colors duration-300 cursor-default"
+              style={{
+                background: "#161616",
+                padding: "32px 40px",
+                border: "1px solid transparent",
+                cursor: "default",
+              }}
             >
-              <div className="text-accent text-3xl mb-8">{s.icon}</div>
-              <h3 className="font-syne font-extrabold text-2xl mb-4">{s.title}</h3>
-              <p className="text-muted text-sm leading-relaxed">{s.desc}</p>
-              <div className="mt-8 text-accent text-xs uppercase tracking-[0.3em] opacity-0 group-hover:opacity-100 transition-opacity">
+              <div style={{ color: "#C8FF00", fontSize: 28, marginBottom: 32 }}>{s.icon}</div>
+              <h3
+                style={{
+                  fontFamily: "Syne, sans-serif",
+                  fontWeight: 800,
+                  fontSize: 24,
+                  color: "#F0EDE8",
+                  marginBottom: 16,
+                  marginTop: 0,
+                }}
+              >
+                {s.title}
+              </h3>
+              <p
+                style={{
+                  color: "#888888",
+                  fontSize: 14,
+                  lineHeight: 1.625,
+                  margin: 0,
+                }}
+              >
+                {s.desc}
+              </p>
+              <div
+                style={{
+                  marginTop: 32,
+                  color: "#C8FF00",
+                  fontSize: 12,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.3em",
+                }}
+              >
                 0{i + 1}
               </div>
             </motion.div>

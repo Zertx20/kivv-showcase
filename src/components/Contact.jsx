@@ -19,51 +19,133 @@ export default function Contact() {
     show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   };
 
+  const inputStyle = {
+    background: "#161616",
+    border: "1px solid rgba(255,255,255,0.08)",
+    padding: "16px 20px",
+    color: "#F0EDE8",
+    fontSize: 14,
+    fontFamily: "DM Sans, sans-serif",
+    width: "100%",
+    boxSizing: "border-box",
+    outline: "none",
+  };
+
   return (
-    <section id="contact" className="py-32 px-6 bg-bg">
+    <section id="contact" style={{ padding: "128px 24px", background: "#080808" }}>
       <motion.div
         variants={container}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.2 }}
-        className="max-w-5xl mx-auto"
+        style={{ maxWidth: 1024, margin: "0 auto" }}
       >
         <motion.div
           variants={item}
-          className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-accent/40"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 12,
+            padding: "8px 16px",
+            borderRadius: 9999,
+            border: "1px solid rgba(200,255,0,0.4)",
+          }}
         >
-          <span className="relative inline-block w-2 h-2 rounded-full bg-green-500 kivv-pulse" />
-          <span className="text-xs uppercase tracking-[0.25em] text-text/80">
+          <span
+            className="kivv-pulse"
+            style={{
+              position: "relative",
+              display: "inline-block",
+              width: 8,
+              height: 8,
+              borderRadius: "50%",
+              background: "#22c55e",
+            }}
+          />
+          <span
+            style={{
+              fontSize: 12,
+              textTransform: "uppercase",
+              letterSpacing: "0.25em",
+              color: "rgba(240,237,232,0.8)",
+            }}
+          >
             Available for new projects
           </span>
         </motion.div>
 
         <motion.h2
           variants={item}
-          className="mt-8 font-syne font-extrabold leading-[1.05]"
-          style={{ fontSize: "clamp(40px, 7vw, 88px)" }}
+          style={{
+            marginTop: 32,
+            fontFamily: "Syne, sans-serif",
+            fontWeight: 800,
+            lineHeight: 1.05,
+            fontSize: "clamp(40px, 7vw, 88px)",
+            color: "#F0EDE8",
+          }}
         >
-          Let's work <span className="text-accent">together.</span>
+          Let's work <span style={{ color: "#C8FF00" }}>together.</span>
         </motion.h2>
 
-        <motion.p variants={item} className="mt-6 text-muted text-lg max-w-xl">
+        <motion.p
+          variants={item}
+          style={{ marginTop: 24, color: "#888888", fontSize: 18, maxWidth: 576, marginBottom: 0 }}
+        >
           Tell me about your project. Most replies within 24 hours.
         </motion.p>
 
-        <div className="mt-16 grid md:grid-cols-2 gap-px bg-[var(--color-border)] border border-[var(--color-border)]">
+        <div
+          style={{
+            marginTop: 64,
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gap: 1,
+            background: "rgba(255,255,255,0.08)",
+            border: "1px solid rgba(255,255,255,0.08)",
+          }}
+        >
           <motion.a
             variants={item}
             whileHover={{ x: 4 }}
             href="https://www.instagram.com/kivv.edits/"
             target="_blank"
             rel="noreferrer"
-            className="bg-card p-8 flex items-center justify-between border border-transparent hover:border-accent transition-colors"
+            style={{
+              background: "#161616",
+              padding: 32,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              textDecoration: "none",
+              color: "#F0EDE8",
+            }}
           >
             <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-muted mb-2">Instagram</p>
-              <p className="font-syne font-extrabold text-xl">@kivv.edits</p>
+              <p
+                style={{
+                  fontSize: 12,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.3em",
+                  color: "#888888",
+                  marginBottom: 8,
+                  marginTop: 0,
+                }}
+              >
+                Instagram
+              </p>
+              <p
+                style={{
+                  fontFamily: "Syne, sans-serif",
+                  fontWeight: 800,
+                  fontSize: 20,
+                  margin: 0,
+                }}
+              >
+                @kivv.edits
+              </p>
             </div>
-            <span className="text-accent text-xl">↗</span>
+            <span style={{ color: "#C8FF00", fontSize: 20 }}>↗</span>
           </motion.a>
           <motion.a
             variants={item}
@@ -71,40 +153,78 @@ export default function Contact() {
             href="https://wa.me/213558041185"
             target="_blank"
             rel="noreferrer"
-            className="bg-card p-8 flex items-center justify-between border border-transparent hover:border-accent transition-colors"
+            style={{
+              background: "#161616",
+              padding: 32,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              textDecoration: "none",
+              color: "#F0EDE8",
+            }}
           >
             <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-muted mb-2">WhatsApp</p>
-              <p className="font-syne font-extrabold text-xl">+213 558 041 185</p>
+              <p
+                style={{
+                  fontSize: 12,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.3em",
+                  color: "#888888",
+                  marginBottom: 8,
+                  marginTop: 0,
+                }}
+              >
+                WhatsApp
+              </p>
+              <p
+                style={{
+                  fontFamily: "Syne, sans-serif",
+                  fontWeight: 800,
+                  fontSize: 20,
+                  margin: 0,
+                }}
+              >
+                +213 558 041 185
+              </p>
             </div>
-            <span className="text-accent text-xl">↗</span>
+            <span style={{ color: "#C8FF00", fontSize: 20 }}>↗</span>
           </motion.a>
         </div>
 
-        <motion.form variants={item} onSubmit={submit} className="mt-12 grid gap-4 max-w-2xl">
-          <div className="grid md:grid-cols-2 gap-4">
-            <input
-              required
-              type="text"
-              placeholder="Your name"
-              className="bg-card border border-[var(--color-border)] px-5 py-4 text-text placeholder:text-muted focus:outline-none focus:border-accent transition-colors"
-            />
-            <input
-              required
-              type="email"
-              placeholder="Email"
-              className="bg-card border border-[var(--color-border)] px-5 py-4 text-text placeholder:text-muted focus:outline-none focus:border-accent transition-colors"
-            />
+        <motion.form
+          variants={item}
+          onSubmit={submit}
+          style={{ marginTop: 48, display: "grid", gap: 16, maxWidth: 672 }}
+        >
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+              gap: 16,
+            }}
+          >
+            <input required type="text" placeholder="Your name" style={inputStyle} />
+            <input required type="email" placeholder="Email" style={inputStyle} />
           </div>
           <textarea
             required
             rows={5}
             placeholder="Tell me about the project…"
-            className="bg-card border border-[var(--color-border)] px-5 py-4 text-text placeholder:text-muted focus:outline-none focus:border-accent transition-colors resize-none"
+            style={{ ...inputStyle, resize: "none" }}
           />
           <button
             type="submit"
-            className="justify-self-start px-8 py-4 bg-accent text-black text-sm font-medium tracking-wide hover:bg-accent/90 transition-colors"
+            style={{
+              justifySelf: "start",
+              padding: "16px 32px",
+              background: "#C8FF00",
+              color: "#000",
+              fontSize: 14,
+              fontWeight: 500,
+              letterSpacing: "0.05em",
+              border: "none",
+              cursor: "pointer",
+            }}
           >
             {sent ? "Sent ✓" : "Send message"}
           </button>

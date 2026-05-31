@@ -1,7 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
 
-/* ---------- Timeline tracks ---------- */
 const TRACKS = [
   { top: "18%", dotDur: "7s", dotDelay: "0s", keyframes: [12, 34, 58, 81] },
   { top: "34%", dotDur: "9s", dotDelay: "1.2s", keyframes: [8, 27, 49, 70, 92] },
@@ -10,7 +8,6 @@ const TRACKS = [
   { top: "82%", dotDur: "8s", dotDelay: "0.8s", keyframes: [10, 30, 52, 74] },
 ];
 
-/* ---------- Gallery slides ---------- */
 const projects = [
   { title: "Project 01", category: "Brand Film", vimeoId: "1197098638", bg: "#1a1a2e" },
   { title: "Project 02", category: "Long-Form", vimeoId: "1197093636", bg: "#0d1117" },
@@ -20,15 +17,17 @@ const projects = [
 const SLIDE_DURATION = 7000;
 
 export default function Hero({ onOpen, paused }) {
+  const safeProjects = Array.isArray(projects) ? projects : [];
   const [index, setIndex] = useState(0);
   const [progress, setProgress] = useState(0);
   const touchX = useRef(null);
   const intervalRef = useRef(null);
   const startTimeRef = useRef(Date.now());
 
-  /* Auto-advance — one clean interval */
+  const currentProject = safeProjects[index] ?? safeProjects[0];
+
   useEffect(() => {
-    if (paused) return;
+    if (paused || safeProjects.length === 0) return;
     startTimeRef.current = Date.now();
     intervalRef.current = setInterval(() => {
       const elapsed = Date.now() - startTimeRef.current;
@@ -37,14 +36,16 @@ export default function Hero({ onOpen, paused }) {
       if (pct >= 100) {
         startTimeRef.current = Date.now();
         setProgress(0);
-        setIndex((i) => (i + 1) % projects.length);
+        setIndex((i) => (i + 1) % safeProjects.length);
       }
     }, 50);
     return () => clearInterval(intervalRef.current);
-  }, [paused, index]);
+  }, [paused, index, safeProjects.length]);
+
+  if (!currentProject) return null;
 
   const go = (dir) => {
-    setIndex((i) => (i + dir + projects.length) % projects.length);
+    setIndex((i) => (i + dir + safeProjects.length) % safeProjects.length);
     setProgress(0);
     startTimeRef.current = Date.now();
   };
@@ -55,7 +56,6 @@ export default function Hero({ onOpen, paused }) {
     startTimeRef.current = Date.now();
   };
 
-  /* Touch swipe */
   const onTouchStart = (e) => {
     touchX.current = e.changedTouches[0].clientX;
   };
@@ -72,12 +72,28 @@ export default function Hero({ onOpen, paused }) {
   };
 
   return (
-    <section id="top" className="relative h-[100dvh] flex flex-col overflow-hidden bg-bg">
-      {/* Timeline background — z-index 0, behind everything */}
+    <section
+      id="top"
+      style={{
+        position: "relative",
+        overflow: "hidden",
+        height: "100dvh",
+        background: "#080808",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <div
-        className="kivv-timeline opacity-25"
+        className="kivv-timeline"
         aria-hidden
-        style={{ position: "absolute", inset: 0, zIndex: 0 }}
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 0,
+          overflow: "hidden",
+          opacity: 0.25,
+          pointerEvents: "none",
+        }}
       >
         {TRACKS.map((t, i) => (
           <div key={i} className="kivv-track" style={{ top: t.top }}>
@@ -93,11 +109,11 @@ export default function Hero({ onOpen, paused }) {
         <div className="kivv-playhead" />
       </div>
 
-      {/* ── ROW 1 — TOP BAR ── */}
       <div
-        className="relative shrink-0 px-5 flex items-center border-b"
         style={{
-          zIndex: 10,
+          position: "relative",
+          zIndex: 1,
+          flexShrink: 0,
           minHeight: 70,
           padding: "16px 20px",
           borderBottom: "1px solid rgba(255,255,255,0.08)",
@@ -105,14 +121,14 @@ export default function Hero({ onOpen, paused }) {
           backdropFilter: "blur(8px)",
           display: "flex",
           justifyContent: "space-between",
+          alignItems: "center",
           width: "100%",
         }}
       >
-        {/* Left: Logo */}
         <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
           <span
             style={{
-              fontFamily: "Syne",
+              fontFamily: "Syne, sans-serif",
               fontWeight: 800,
               fontSize: "22px",
               color: "#F0EDE8",
@@ -124,7 +140,7 @@ export default function Hero({ onOpen, paused }) {
           </span>
           <span
             style={{
-              fontFamily: "Syne",
+              fontFamily: "Syne, sans-serif",
               fontWeight: 800,
               fontSize: "22px",
               color: "#F0EDE8",
@@ -135,16 +151,15 @@ export default function Hero({ onOpen, paused }) {
             EDITS
           </span>
         </div>
-        {/* Right: Info */}
         <div
           style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "3px" }}
         >
           <span
-            style={{ fontFamily: "DM Sans", fontSize: "13px", fontWeight: 500, color: "#F0EDE8" }}
+            style={{ fontFamily: "DM Sans, sans-serif", fontSize: "13px", fontWeight: 500, color: "#F0EDE8" }}
           >
             Abdelkrim Khader
           </span>
-          <span style={{ fontFamily: "DM Sans", fontSize: "12px", color: "#888888" }}>
+          <span style={{ fontFamily: "DM Sans, sans-serif", fontSize: "12px", color: "#888888" }}>
             Video Editor
           </span>
           <a
@@ -152,7 +167,7 @@ export default function Hero({ onOpen, paused }) {
             target="_blank"
             rel="noopener noreferrer"
             style={{
-              fontFamily: "DM Sans",
+              fontFamily: "DM Sans, sans-serif",
               fontSize: "12px",
               color: "#C8FF00",
               textDecoration: "none",
@@ -163,26 +178,27 @@ export default function Hero({ onOpen, paused }) {
         </div>
       </div>
 
-      {/* ── ROW 1.5 — TITLE ── */}
-      <div className="relative shrink-0 text-center" style={{ zIndex: 10, padding: "20px 0" }}>
+      <div style={{ position: "relative", zIndex: 1, padding: "20px 0", textAlign: "center" }}>
         <p
           style={{
             fontSize: "10px",
             letterSpacing: "0.2em",
             textTransform: "uppercase",
             color: "#888",
+            margin: 0,
           }}
         >
           SELECTED WORK
         </p>
         <h2
           style={{
-            fontFamily: "Syne",
+            fontFamily: "Syne, sans-serif",
             fontWeight: 800,
             fontSize: "clamp(28px, 7vw, 40px)",
             color: "#F0EDE8",
             lineHeight: 1,
             marginTop: "6px",
+            marginBottom: 0,
           }}
         >
           Latest Projects
@@ -190,32 +206,67 @@ export default function Hero({ onOpen, paused }) {
         <div style={{ width: 40, height: 2, background: "#C8FF00", margin: "8px auto 0" }} />
       </div>
 
-      {/* ── ROW 2 — 9:16 GALLERY ── */}
       <div
-        className="relative flex-1 flex flex-col items-center justify-center px-4 min-h-0 select-none"
-        style={{ zIndex: 10 }}
+        style={{
+          position: "relative",
+          zIndex: 1,
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "0 16px",
+          minHeight: 0,
+          userSelect: "none",
+        }}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
       >
-        {/* Card — small, centered, rounded */}
         <div
-          className="relative w-full max-w-[220px] mx-auto rounded-2xl overflow-hidden"
-          style={{ aspectRatio: "9/16" }}
+          style={{
+            position: "relative",
+            aspectRatio: "9 / 16",
+            width: "100%",
+            maxWidth: "220px",
+            height: "calc(220px * 16 / 9)",
+            margin: "0 auto",
+            borderRadius: "16px",
+            overflow: "hidden",
+          }}
         >
           <div
-            className="absolute inset-0 text-left"
-            style={{ backgroundColor: projects[index].bg }}
-            onClick={() => onOpen?.(projects[index])}
+            style={{
+              position: "absolute",
+              inset: 0,
+              backgroundColor: currentProject.bg,
+              cursor: "pointer",
+            }}
+            onClick={() => onOpen?.(currentProject)}
           >
             <iframe
-              key={projects[index].vimeoId}
-              src={`https://player.vimeo.com/video/${projects[index].vimeoId}?autoplay=1&muted=1&background=1&loop=1&transparent=0&quality=720p`}
-              className="absolute inset-0 w-full h-full"
-              style={{ border: "none", pointerEvents: "none" }}
+              key={currentProject.vimeoId}
+              src={`https://player.vimeo.com/video/${currentProject.vimeoId}?autoplay=1&muted=1&background=1&loop=1&transparent=0&quality=720p`}
+              title={currentProject.title}
+              style={{
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                border: "none",
+                pointerEvents: "none",
+                display: "block",
+              }}
               allow="autoplay; fullscreen"
             />
-            <span className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
-            <span
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent 50%)",
+                pointerEvents: "none",
+              }}
+            />
+            <div
               style={{
                 position: "absolute",
                 top: "50%",
@@ -235,50 +286,66 @@ export default function Hero({ onOpen, paused }) {
               }}
             >
               <span style={{ fontSize: "18px", color: "#C8FF00", paddingLeft: "3px" }}>▶</span>
-            </span>
-            <span className="absolute left-3 bottom-3 z-10">
-              <span className="block text-[10px] uppercase tracking-[0.3em] text-accent mb-0.5">
-                {projects[index].category}
+            </div>
+            <div style={{ position: "absolute", left: 12, bottom: 12, zIndex: 10 }}>
+              <span
+                style={{
+                  display: "block",
+                  fontSize: "10px",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.3em",
+                  color: "#C8FF00",
+                  marginBottom: 2,
+                }}
+              >
+                {currentProject.category}
               </span>
-              <span className="block font-syne font-bold text-[14px] text-white">
-                {projects[index].title}
+              <span
+                style={{
+                  display: "block",
+                  fontFamily: "Syne, sans-serif",
+                  fontWeight: 700,
+                  fontSize: "14px",
+                  color: "#ffffff",
+                }}
+              >
+                {currentProject.title}
               </span>
-            </span>
-
-            <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-black/40 z-20">
+            </div>
+            <div
+              style={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: 2,
+                background: "rgba(0,0,0,0.4)",
+                zIndex: 20,
+              }}
+            >
               <div
-                className="h-full bg-accent transition-[width] duration-75 ease-linear"
-                style={{ width: `${progress}%` }}
+                style={{
+                  height: "100%",
+                  width: `${progress}%`,
+                  background: "#C8FF00",
+                  transition: "width 75ms linear",
+                }}
               />
             </div>
           </div>
-
-          {/* Desktop arrows */}
-          <button
-            aria-label="Previous"
-            onClick={(e) => {
-              e.stopPropagation();
-              go(-1);
-            }}
-            className="hidden md:flex absolute -left-10 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 backdrop-blur border border-[var(--color-border)] text-text hover:border-accent hover:text-accent transition-colors items-center justify-center z-20 text-sm"
-          >
-            ←
-          </button>
-          <button
-            aria-label="Next"
-            onClick={(e) => {
-              e.stopPropagation();
-              go(1);
-            }}
-            className="hidden md:flex absolute -right-10 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 backdrop-blur border border-[var(--color-border)] text-text hover:border-accent hover:text-accent transition-colors items-center justify-center z-20 text-sm"
-          >
-            →
-          </button>
         </div>
 
-        {/* Dot indicators */}
-        <div className="flex items-center justify-center gap-1.5 mt-3 shrink-0">
-          {projects.map((_, i) => (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 6,
+            marginTop: 12,
+            flexShrink: 0,
+          }}
+        >
+          {safeProjects.map((_, i) => (
             <button
               key={i}
               aria-label={`Go to project ${i + 1}`}
@@ -286,33 +353,75 @@ export default function Hero({ onOpen, paused }) {
                 e.stopPropagation();
                 jump(i);
               }}
-              className={`h-[5px] rounded-full transition-all ${
-                i === index ? "w-[18px] bg-accent" : "w-[5px] bg-text/30 hover:bg-text/50"
-              }`}
+              style={{
+                height: 5,
+                borderRadius: 9999,
+                border: "none",
+                padding: 0,
+                cursor: "pointer",
+                width: i === index ? 18 : 5,
+                background: i === index ? "#C8FF00" : "rgba(240,237,232,0.3)",
+                transition: "all 0.2s",
+              }}
             />
           ))}
         </div>
       </div>
 
-      {/* ── ROW 3 — BOTTOM BAR ── */}
       <div
-        className="relative shrink-0 px-4 flex flex-col items-center justify-center text-center"
-        style={{ zIndex: 10, height: 60 }}
+        style={{
+          position: "relative",
+          zIndex: 1,
+          flexShrink: 0,
+          padding: "0 16px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          textAlign: "center",
+          height: 60,
+        }}
       >
-        <p className="text-muted text-[11px] tracking-[0.1em] font-light mb-2">
+        <p
+          style={{
+            color: "#888888",
+            fontSize: "11px",
+            letterSpacing: "0.1em",
+            fontWeight: 300,
+            marginBottom: 8,
+            marginTop: 0,
+          }}
+        >
           Clean, Minimal & High-Retention Edits
         </p>
-        <div className="flex items-center justify-center gap-3">
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12 }}>
           <button
             onClick={scrollTo("#work")}
-            className="px-5 py-2 bg-accent text-black text-[13px] font-medium tracking-wide hover:bg-accent/90 transition-colors cursor-pointer"
+            style={{
+              padding: "8px 20px",
+              background: "#C8FF00",
+              color: "#000",
+              fontSize: "13px",
+              fontWeight: 500,
+              letterSpacing: "0.05em",
+              border: "none",
+              cursor: "pointer",
+            }}
           >
             All Projects →
           </button>
           <a
             href="#contact"
             onClick={scrollTo("#contact")}
-            className="px-5 py-2 border border-[var(--color-border)] text-text text-[13px] font-medium tracking-wide hover:border-accent hover:text-accent transition-colors"
+            style={{
+              padding: "8px 20px",
+              border: "1px solid rgba(255,255,255,0.08)",
+              color: "#F0EDE8",
+              fontSize: "13px",
+              fontWeight: 500,
+              letterSpacing: "0.05em",
+              textDecoration: "none",
+            }}
           >
             Let's Talk
           </a>

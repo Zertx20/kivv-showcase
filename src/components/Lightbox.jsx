@@ -25,18 +25,49 @@ export default function Lightbox({ project, onClose }) {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
           onClick={onClose}
-          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4 md:p-10"
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 50,
+            background: "rgba(0,0,0,0.95)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "16px 40px",
+          }}
         >
           <button
             aria-label="Close"
             onClick={onClose}
-            className="absolute top-5 right-5 w-11 h-11 rounded-full border border-[var(--color-border)] text-text hover:border-accent hover:text-accent transition-colors flex items-center justify-center text-xl"
+            style={{
+              position: "absolute",
+              top: 20,
+              right: 20,
+              width: 44,
+              height: 44,
+              borderRadius: "50%",
+              border: "1px solid rgba(255,255,255,0.08)",
+              color: "#F0EDE8",
+              background: "transparent",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: 20,
+              cursor: "pointer",
+            }}
           >
             ×
           </button>
 
-          <div onClick={(e) => e.stopPropagation()} className="w-full max-w-5xl">
-            <div className="relative aspect-video bg-black border border-[var(--color-border)]">
+          <div onClick={(e) => e.stopPropagation()} style={{ width: "100%", maxWidth: 1024 }}>
+            <div
+              style={{
+                position: "relative",
+                aspectRatio: "16 / 9",
+                background: "#000",
+                border: "1px solid rgba(255,255,255,0.08)",
+              }}
+            >
               {project.videoSrc ? (
                 <VideoPlayer
                   src={project.videoSrc}
@@ -44,7 +75,7 @@ export default function Lightbox({ project, onClose }) {
                   autoPlay
                   controls
                   preload="auto"
-                  className="absolute inset-0 w-full h-full"
+                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
                 />
               ) : project.vimeoId ? (
                 <iframe
@@ -52,7 +83,13 @@ export default function Lightbox({ project, onClose }) {
                   title={project.title}
                   allow="autoplay; fullscreen; picture-in-picture"
                   allowFullScreen
-                  className="absolute inset-0 w-full h-full"
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    border: "none",
+                  }}
                 />
               ) : (
                 <iframe
@@ -60,18 +97,51 @@ export default function Lightbox({ project, onClose }) {
                   title={project.title}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
-                  className="absolute inset-0 w-full h-full"
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    border: "none",
+                  }}
                 />
               )}
             </div>
-            <div className="mt-5 flex items-baseline justify-between gap-4">
+            <div
+              style={{
+                marginTop: 20,
+                display: "flex",
+                alignItems: "baseline",
+                justifyContent: "space-between",
+                gap: 16,
+              }}
+            >
               <div>
-                <p className="text-xs uppercase tracking-[0.3em] text-accent">{project.category}</p>
-                <h3 className="font-syne font-extrabold text-2xl md:text-3xl mt-2">
+                <p
+                  style={{
+                    fontSize: 12,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.3em",
+                    color: "#C8FF00",
+                    margin: 0,
+                  }}
+                >
+                  {project.category}
+                </p>
+                <h3
+                  style={{
+                    fontFamily: "Syne, sans-serif",
+                    fontWeight: 800,
+                    fontSize: "clamp(24px, 4vw, 30px)",
+                    color: "#F0EDE8",
+                    marginTop: 8,
+                    marginBottom: 0,
+                  }}
+                >
                   {project.title}
                 </h3>
               </div>
-              <p className="text-muted text-xs hidden md:block">ESC to close</p>
+              <p style={{ color: "#888888", fontSize: 12, margin: 0 }}>ESC to close</p>
             </div>
           </div>
         </motion.div>

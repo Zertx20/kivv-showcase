@@ -119,7 +119,7 @@ function RootShell({ children }: { children: ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body>
+      <body style={{ background: "#080808", margin: 0, color: "#F0EDE8" }}>
         {children}
         <Scripts />
       </body>
@@ -132,8 +132,17 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <div
+        style={{
+          background: "#080808",
+          color: "#F0EDE8",
+          minHeight: "100vh",
+          fontFamily: "'DM Sans', sans-serif",
+        }}
+      >
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+      </div>
     </QueryClientProvider>
   );
 }

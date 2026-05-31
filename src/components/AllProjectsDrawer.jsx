@@ -25,24 +25,26 @@ export default function AllProjectsDrawer({ isOpen, onClose, onVideoSelect }) {
   const startY = useRef(null);
   const [thumbnails, setThumbnails] = useState({});
 
-  /* Fetch Vimeo thumbnails */
   useEffect(() => {
+    if (!ALL_PROJECTS || ALL_PROJECTS.length === 0) return;
+
     ALL_PROJECTS.forEach(async (project) => {
-      if (thumbnails[project.vimeoId]) return;
+      if (!project.vimeoId) return;
       try {
         const res = await fetch(`https://vimeo.com/api/v2/video/${project.vimeoId}.json`);
+        if (!res.ok) return;
         const data = await res.json();
+        if (!data || !data[0]) return;
         setThumbnails((prev) => ({
           ...prev,
-          [project.vimeoId]: data[0]?.thumbnail_large,
+          [project.vimeoId]: data[0].thumbnail_large,
         }));
       } catch (e) {
-        // thumbnail stays undefined, fallback to bg color
+        console.warn("Thumbnail fetch failed for", project.vimeoId, e);
       }
     });
   }, []);
 
-  /* Lock body scroll when drawer is open */
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -54,7 +56,6 @@ export default function AllProjectsDrawer({ isOpen, onClose, onVideoSelect }) {
     };
   }, [isOpen]);
 
-  /* Swipe down to close */
   const handleTouchStart = (e) => {
     startY.current = e.changedTouches[0].clientY;
   };
@@ -75,25 +76,32 @@ export default function AllProjectsDrawer({ isOpen, onClose, onVideoSelect }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.35, ease: "easeInOut" }}
-          className="fixed inset-0"
-          style={{ zIndex: 50, pointerEvents: isOpen ? "all" : "none" }}
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 50,
+            pointerEvents: isOpen ? "all" : "none",
+          }}
         >
-          {/* Backdrop */}
           <div
-            className="absolute inset-0"
-            style={{ background: "rgba(0,0,0,0.6)" }}
+            style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.6)" }}
             onClick={onClose}
             aria-hidden
           />
 
-          {/* Drawer panel */}
           <motion.div
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-            className="absolute bottom-0 left-0 right-0 flex flex-col overflow-hidden"
             style={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              display: "flex",
+              flexDirection: "column",
+              overflow: "hidden",
               height: "92dvh",
               background: "#0d0d0d",
               borderRadius: "20px 20px 0 0",
@@ -102,7 +110,6 @@ export default function AllProjectsDrawer({ isOpen, onClose, onVideoSelect }) {
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
           >
-            {/* Drag handle */}
             <div
               style={{
                 width: 36,
@@ -114,7 +121,6 @@ export default function AllProjectsDrawer({ isOpen, onClose, onVideoSelect }) {
               }}
             />
 
-            {/* Header */}
             <div
               style={{
                 display: "flex",
@@ -126,7 +132,7 @@ export default function AllProjectsDrawer({ isOpen, onClose, onVideoSelect }) {
               }}
             >
               <span
-                style={{ fontFamily: "Syne", fontWeight: 800, fontSize: "18px", color: "#F0EDE8" }}
+                style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: 18, color: "#F0EDE8" }}
               >
                 All Projects
               </span>
@@ -139,7 +145,7 @@ export default function AllProjectsDrawer({ isOpen, onClose, onVideoSelect }) {
                   background: "#1a1a1a",
                   border: "1px solid rgba(255,255,255,0.1)",
                   color: "#888",
-                  fontSize: "16px",
+                  fontSize: 16,
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
@@ -150,14 +156,14 @@ export default function AllProjectsDrawer({ isOpen, onClose, onVideoSelect }) {
               </button>
             </div>
 
-            {/* Scrollable grid */}
             <div
-              className="grid grid-cols-2 md:grid-cols-3"
               style={{
                 flex: 1,
                 overflowY: "auto",
                 WebkitOverflowScrolling: "touch",
                 padding: 12,
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))",
                 gap: 8,
                 alignContent: "start",
               }}
@@ -170,14 +176,12 @@ export default function AllProjectsDrawer({ isOpen, onClose, onVideoSelect }) {
                     position: "relative",
                     overflow: "hidden",
                     width: "100%",
-                    height: "calc((100vw - 32px) / 2 * 16 / 9)",
-                    borderRadius: "10px",
+                    aspectRatio: "9 / 16",
+                    borderRadius: 10,
                     background: project.bg,
                     cursor: "pointer",
-                    display: "block",
                   }}
                 >
-                  {/* Thumbnail image */}
                   {thumbnails[project.vimeoId] && (
                     <img
                       src={thumbnails[project.vimeoId]}
@@ -194,7 +198,6 @@ export default function AllProjectsDrawer({ isOpen, onClose, onVideoSelect }) {
                     />
                   )}
 
-                  {/* Dark overlay */}
                   <div
                     style={{
                       position: "absolute",
@@ -203,7 +206,6 @@ export default function AllProjectsDrawer({ isOpen, onClose, onVideoSelect }) {
                     }}
                   />
 
-                  {/* Play button */}
                   <div
                     style={{
                       position: "absolute",
@@ -222,18 +224,9 @@ export default function AllProjectsDrawer({ isOpen, onClose, onVideoSelect }) {
                       pointerEvents: "none",
                     }}
                   >
-                    <span
-                      style={{
-                        color: "#C8FF00",
-                        fontSize: "14px",
-                        paddingLeft: "3px",
-                      }}
-                    >
-                      ▶
-                    </span>
+                    <span style={{ color: "#C8FF00", fontSize: 14, paddingLeft: 3 }}>▶</span>
                   </div>
 
-                  {/* Bottom text overlay */}
                   <div
                     style={{
                       position: "absolute",
@@ -248,11 +241,11 @@ export default function AllProjectsDrawer({ isOpen, onClose, onVideoSelect }) {
                   >
                     <div
                       style={{
-                        fontSize: "8px",
+                        fontSize: 8,
                         letterSpacing: "0.12em",
                         textTransform: "uppercase",
                         color: "#C8FF00",
-                        marginBottom: "2px",
+                        marginBottom: 2,
                       }}
                     >
                       {project.category}
@@ -261,7 +254,7 @@ export default function AllProjectsDrawer({ isOpen, onClose, onVideoSelect }) {
                       style={{
                         fontFamily: "Syne, sans-serif",
                         fontWeight: 700,
-                        fontSize: "11px",
+                        fontSize: 11,
                         color: "#ffffff",
                         lineHeight: 1.2,
                       }}

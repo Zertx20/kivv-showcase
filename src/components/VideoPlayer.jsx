@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from "react";
 export default function VideoPlayer({
   src,
   poster,
-  className = "",
+  style,
   autoPlay = false,
   muted = false,
   loop = false,
@@ -25,13 +25,18 @@ export default function VideoPlayer({
   }, [src]);
 
   return (
-    <div className={`relative ${className}`}>
-      {/* Poster fallback shown until video loads */}
+    <div style={{ position: "relative", ...style }}>
       {poster && !loaded && (
         <img
           src={poster}
           alt=""
-          className="absolute inset-0 w-full h-full object-cover"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+          }}
           loading="lazy"
         />
       )}
@@ -47,7 +52,7 @@ export default function VideoPlayer({
         preload={preload}
         onLoadedMetadata={onLoadedMetadata}
         onClick={onClick}
-        className="w-full h-full object-cover"
+        style={{ width: "100%", height: "100%", objectFit: "cover" }}
       />
     </div>
   );

@@ -26,7 +26,13 @@ function Index() {
   }, [activeVideo, drawerOpen]);
 
   return (
-    <main className="bg-bg text-text font-sans">
+    <main
+      style={{
+        background: "#080808",
+        color: "#F0EDE8",
+        fontFamily: "'DM Sans', sans-serif",
+      }}
+    >
       <Hero onOpen={setActive} paused={!!active} />
       <About />
       <Services />
