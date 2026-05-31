@@ -1,11 +1,12 @@
 {
   "name": "tanstack_start_ts",
   "private": true,
+  "packageManager": "bun@1.2.19",
   "sideEffects": false,
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build && node scripts/build-post.mjs",
+    "build": "vite build",
     "start": "vite preview",
     "preview": "vite preview",
     "lint": "eslint .",
