@@ -7,10 +7,15 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
+  vite: {
+    define: {
+      'process.env.NITRO_PRESET': JSON.stringify('netlify'),
+    },
+  },
   nitro: {
-    preset: "netlify",
+    preset: 'netlify',
   },
   tanstackStart: {
-    server: { entry: "server" },
+    server: { entry: 'server' },
   },
 });
