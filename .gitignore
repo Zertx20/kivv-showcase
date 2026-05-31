@@ -8,15 +8,19 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+
+# Build output (generated on Vercel during deploy — do not commit)
 dist
 dist-ssr
 .output
-.vercel
+.vercel/output
+.vercel/cache
 output
 .vinxi
-.tanstack/**
 .nitro
 .netlify
+.tanstack/tmp
+
 *.local
 
 # Wrangler / Cloudflare

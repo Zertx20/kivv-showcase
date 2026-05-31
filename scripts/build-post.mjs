@@ -1,23 +1,29 @@
-import fs from 'fs';
-import path from 'path';
+import fs from "fs";
+import path from "path";
 
-const distDir = './dist/client';
-const assetsDir = path.join(distDir, 'assets');
+const distDir = "./dist/client";
+const assetsDir = path.join(distDir, "assets");
 
-// Check if assets directory exists
 if (!fs.existsSync(assetsDir)) {
-  console.error('Assets directory not found:', assetsDir);
+  console.error("Assets directory not found:", assetsDir);
   process.exit(1);
 }
 
-// Find the built JS and CSS files
 const files = fs.readdirSync(assetsDir);
-const jsFile = files.find(f => f.startsWith('index-') && f.endsWith('.js'));
-const cssFile = files.find(f => f.startsWith('styles-') && f.endsWith('.css'));
+const cssFile = files.find((f) => f.startsWith("styles-") && f.endsWith(".css"));
+const jsFiles = files
+  .filter((f) => f.startsWith("index-") && f.endsWith(".js"))
+  .sort(
+    (a, b) =>
+      fs.statSync(path.join(assetsDir, a)).size -
+      fs.statSync(path.join(assetsDir, b)).size,
+  );
+
+const jsFile = jsFiles[0];
 
 if (!jsFile || !cssFile) {
-  console.error('Could not find built assets in', assetsDir);
-  console.error('Files found:', files);
+  console.error("Could not find built assets in", assetsDir);
+  console.error("Files found:", files);
   process.exit(1);
 }
 
@@ -31,16 +37,16 @@ const html = `<!DOCTYPE html>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <script type="module" crossorigin src="/assets/${jsFile}"></script>
   <link rel="stylesheet" crossorigin href="/assets/${cssFile}">
+  <script type="module" crossorigin src="/assets/${jsFile}"></script>
 </head>
-<body>
+<body style="background:#080808;margin:0;color:#F0EDE8;">
   <div id="root"></div>
 </body>
 </html>
 `;
 
-fs.writeFileSync(path.join(distDir, 'index.html'), html);
-console.log('Generated dist/client/index.html');
-console.log('JS:', jsFile);
-console.log('CSS:', cssFile);
+fs.writeFileSync(path.join(distDir, "index.html"), html);
+console.log("Generated dist/client/index.html");
+console.log("JS:", jsFile);
+console.log("CSS:", cssFile);
