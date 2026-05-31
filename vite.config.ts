@@ -12,13 +12,13 @@ export default defineConfig({
     server: { entry: "server" },
   },
   vite: {
-    plugins: [
+    plugins: process.env.NODE_ENV === 'production' ? [
       nitro({
         preset: "vercel",
         output: {
           dir: "output",
         },
       }),
-    ],
+    ] : [],
   },
 });
