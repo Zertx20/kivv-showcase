@@ -1,8 +1,13 @@
 [build]
   command = "bun run build"
   publish = "dist/client"
+  functions = "dist/server"
+
+[functions]
+  node_bundler = "esbuild"
 
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/.netlify/functions/server"
   status = 200
+  force = true
